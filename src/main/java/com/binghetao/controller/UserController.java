@@ -3,12 +3,18 @@ package com.binghetao.controller;
 import com.binghetao.pojo.Result;
 import com.binghetao.pojo.User;
 import com.binghetao.service.UserService;
+import com.binghetao.utils.JwtUtil;
+import com.binghetao.utils.Md5Util;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -29,5 +35,21 @@ public class UserController {
         }else{
             return Result.error("用户名被占用");
         }
+    }
+
+    @PostMapping("/login")
+    public Result login(@RequestParam("username") String username, @RequestParam("password") String password) {
+        User u = userService.findByUserName(username);
+        if (u == null) {
+            return Result.error("用户名不正确");
+        }
+        if(Md5Util.getMD5String(password).equals(u.getPassword())) {
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("username", u.getUsername());
+            claims.put("id", u.getId());
+            String token = JwtUtil.genToken(claims);
+            return Result.success(token);
+        }
+        return Result.error("密码错误");
     }
 }
