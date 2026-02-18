@@ -4,3 +4,7 @@ spring:
     username: root
     password: 20041230Tbh
     url: jdbc:mysql://localhost:3306/big_event
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
