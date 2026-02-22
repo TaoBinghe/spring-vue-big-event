@@ -3,7 +3,6 @@ package com.binghetao.controller;
 import com.binghetao.pojo.Category;
 import com.binghetao.pojo.Result;
 import com.binghetao.service.CategoryService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
