@@ -3,6 +3,7 @@ package com.binghetao.mapper;
 import com.binghetao.pojo.Article;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -14,4 +15,9 @@ public interface ArticleMapper {
     void add(Article article);
 
     List<Article> list(Integer id, String categoryId, String state);
+
+    @Update("UPDATE article SET title=#{title}, content=#{content}," +
+            "cover_img=#{coverImg},state=#{state},category_id=#{categoryId},update_time=NOW() " +
+            "WHERE id=#{id}")
+    void update(Article article);
 }

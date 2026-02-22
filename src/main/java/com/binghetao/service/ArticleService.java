@@ -7,4 +7,6 @@ public interface ArticleService {
     void add(Article article);
 
     PageBean<Article> list(Integer pageNum, Integer pageSize, String categoryId, String state);
+
+    void update(Article article);
 }

@@ -38,9 +38,14 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> list=articleMapper.list(id, categoryId, state);
 
         Page<Article> pg= (Page<Article>) list;
-        pg.setTotal(pg.getTotal());
-        pg.setPages(pg.getPages());
+        pb.setTotal(pg.getTotal());
+        pb.setItems(pg.getResult());
         return pb;
+    }
+
+    @Override
+    public void update(Article article) {
+        articleMapper.update(article);
     }
 
 }
