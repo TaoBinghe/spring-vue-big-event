@@ -1,6 +1,7 @@
 package com.binghetao.controller;
 
 import com.binghetao.pojo.Article;
+import com.binghetao.pojo.PageBean;
 import com.binghetao.pojo.Result;
 import com.binghetao.service.ArticleService;
 import com.binghetao.utils.JwtUtil;
@@ -22,5 +23,13 @@ public class ArticleController {
     public Result add(@RequestBody @Validated Article article) {
         articleService.add(article);
         return Result.success();
+    }
+
+    @GetMapping
+    public Result<PageBean<Article>> list(Integer pageNum, Integer pageSize,
+                                          @RequestParam(required = false) String categoryId,
+                                          @RequestParam(required = false) String state) {
+        PageBean<Article> pb = articleService.list(pageNum, pageSize, categoryId, state);
+        return Result.success(pb);
     }
 }
