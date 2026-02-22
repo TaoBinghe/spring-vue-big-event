@@ -38,4 +38,15 @@ public class ArticleController {
         articleService.update(article);
         return Result.success();
     }
+
+    @GetMapping("/detail")
+    public Result<Article> detail(@RequestParam Integer id) {
+        return Result.success( articleService.getDetailById(id));
+    }
+
+    @DeleteMapping
+    public Result delete(@RequestParam Integer id) {
+        articleService.deleteById(id);
+        return Result.success();
+    }
 }

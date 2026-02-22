@@ -48,4 +48,14 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.update(article);
     }
 
+    @Override
+    public Article getDetailById(Integer id) {
+        return articleMapper.getDetailById(id);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        articleMapper.deleteById(id);
+    }
+
 }

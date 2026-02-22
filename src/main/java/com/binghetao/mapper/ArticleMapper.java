@@ -1,9 +1,7 @@
 package com.binghetao.mapper;
 
 import com.binghetao.pojo.Article;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,4 +18,10 @@ public interface ArticleMapper {
             "cover_img=#{coverImg},state=#{state},category_id=#{categoryId},update_time=NOW() " +
             "WHERE id=#{id}")
     void update(Article article);
+
+    @Select("SELECT * FROM article WHERE id=#{id}")
+    Article getDetailById(Integer id);
+
+    @Delete("DELETE FROM article WHERE id=#{id}")
+    void deleteById(Integer id);
 }
