@@ -9,12 +9,15 @@ import com.binghetao.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -23,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
@@ -48,6 +54,9 @@ public class UserController {
             claims.put("username", u.getUsername());
             claims.put("id", u.getId());
             String token = JwtUtil.genToken(claims);
+            // 存入token到redis
+            ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+            ops.set(token, token,1, TimeUnit.HOURS);
             return Result.success(token);
         }
         return Result.error("密码错误");
@@ -73,7 +82,8 @@ public class UserController {
     }
 
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String, String> params) {
+    public Result updatePwd(@RequestBody Map<String, String> params,
+                            @RequestHeader("Authorization") String token) {
         // 参数校验
         String oldPwd = params.get("old_pwd");
         String newPwd = params.get("new_pwd");
@@ -98,6 +108,10 @@ public class UserController {
         }
         // 更新密码
         userService.updatePwd(newPwd);
+
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        ops.getOperations().delete(token);
+
         return Result.success();
     }
 }

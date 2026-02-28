@@ -1,0 +1,1 @@
+import{r as e}from"./request-B-ejADuY.js";const a=()=>e({url:"/category",method:"get"}),o=t=>e({url:"/category/detail",method:"get",params:{id:t}}),s=t=>e({url:"/category",method:"post",data:t}),g=t=>e({url:"/category",method:"put",data:t}),u=t=>e({url:"/category",method:"delete",params:{id:t}});export{o as a,s as b,u as d,a as g,g as u};

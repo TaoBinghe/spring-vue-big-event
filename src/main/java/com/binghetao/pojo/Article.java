@@ -1,7 +1,7 @@
 package com.binghetao.pojo;
 
 
-import anno.State;
+import com.binghetao.anno.State;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

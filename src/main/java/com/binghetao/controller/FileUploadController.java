@@ -1,6 +1,7 @@
 package com.binghetao.controller;
 
 import com.binghetao.pojo.Result;
+import com.binghetao.utils.AliOssUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class FileUploadController {
         String originalFilename = file.getOriginalFilename();
         String filename = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
         file.transferTo(new File("E:\\java_study\\big-event\\files\\" + filename));
-        return Result.success(originalFilename);
+//        String url = AliOssUtil.uploadFile(filename, file.getInputStream());
+        return Result.success("url");
     }
 }
