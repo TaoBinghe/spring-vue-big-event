@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String, String> params,
+    public Result<?> updatePwd(@RequestBody Map<String, String> params,
                             @RequestHeader("Authorization") String token) {
         // 参数校验
         String oldPwd = params.get("old_pwd");

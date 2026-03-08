@@ -21,8 +21,8 @@ public class FileUploadController {
     public Result<String> upload(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         String filename = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
-        file.transferTo(new File("E:\\java_study\\big-event\\files\\" + filename));
-//        String url = AliOssUtil.uploadFile(filename, file.getInputStream());
-        return Result.success("url");
+        file.transferTo(new File("E:\\java_study\\big-event\\backend\\files\\" + filename));
+        String url = "http://localhost:8080/files/" + filename;
+        return Result.success(url);
     }
 }
